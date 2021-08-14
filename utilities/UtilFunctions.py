@@ -16,18 +16,17 @@ def gbm_generator(v0: float, T: int, sigma: float,
     :param r: drift of GBM (risk-free rate)
     :param dt: inverse of frequency of observations per year (in years)
     :param n_paths: number of different paths to be simulated
-    :return: a matrix of n=n_paths GBMs over T years sampled every dt year
+    :return: a matrix of N=n_paths GBMs over T years sampled every dt year
     """
-    n_periods = int(T/dt)       # total number of observations
-    # create empty matrix with dimension (n_periods+1)*n_paths
-    v = np.zeros((n_periods + 1, n_paths))
-    v[0, :] = v0 * np.ones(n_paths)
-    # simulate firm value path according to GBM model
-    for i in trange(n_periods):
-        rand_vec = np.random.normal(0, 1, n_paths)
-        v[i+1, :] = v[i, :] * np.exp((r - sigma ** 2 / 2) * dt +
-                                    sigma * (dt ** 0.5) * rand_vec)
-    return v
+    n_periods = int(T/dt)
+    # create matrix with dimensions {n_periods+1, n_paths} and initialize v(t=0)=v0
+    v_n_t = np.zeros((n_periods + 1, n_paths))
+    v_n_t[0, :] = v0 * np.ones(n_paths)
+    # simulate paths
+    v_n_t[1:, :] = v0 * np.exp(np.cumsum((r - 0.5 * sigma ** 2) * dt + sigma * (dt ** 0.5)
+                                         * np.random.standard_normal((n_periods, n_paths)),
+                                         axis=0))
+    return v_n_t
 
 
 def merton_minus_bc_squared(Dt_: np.array, pd_mert: float, paths: np.array):

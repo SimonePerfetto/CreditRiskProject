@@ -66,4 +66,3 @@ spread_varying_sigmas = pd.DataFrame(spread_matrix_varying_sigmas, index=maturit
                                               for sig in sigmas])
 spread_plotter(spread_varying_sigmas, image_name="spreads_varying_vol")
 
-a=10
