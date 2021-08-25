@@ -8,7 +8,7 @@ from tqdm import trange
 from scipy.stats import norm
 from utilities.UtilFunctions import gbm_generator, merton_minus_bc_squared
 cf.go_offline(connected=True)
-
+#a
 # define inputs
 np.random.seed(0)
 v0, D, T, sigma, r,  = 200, 100, 20, 0.25, 0.03
