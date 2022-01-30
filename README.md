@@ -1,4 +1,4 @@
-# CreditRiskProject
+# Credit Risk Project
 
 The objective of this project is to model the expected default probability
 and credit spread of a firm that is financing itself partly through debt
